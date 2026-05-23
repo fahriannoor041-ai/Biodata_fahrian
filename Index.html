@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biodata — Muhammad Fahrian Noor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --paper:    #f7f0e2;
+      --parch:    #ede0c4;
+      --brown:    #3b2310;
+      --rust:     #9c4221;
+      --gold:     #c9973a;
+      --ink:      #1e0f06;
+      --muted:    #7a5c45;
+      --shadow:   rgba(30,15,6,0.18);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #2a1a0d;
+      font-family: 'Lora', serif;
+      color: var(--brown);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 32px 16px 60px;
+    }
+
+    /* Background dots pattern */
+    body::before {
+      content:'';
+      position:fixed;
+      inset:0;
+      background-image: radial-gradient(circle, rgba(201,151,58,0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events:none;
+    }
+
+    /* ── BOOK WRAPPER ── */
+    .book {
+      width: 100%;
+      max-width: 520px;
+      background: var(--paper);
+      position: relative;
+      box-shadow:
+        -6px 0 18px rgba(0,0,0,0.4),
+        6px 0 18px rgba(0,0,0,0.3),
+        0 8px 40px rgba(0,0,0,0.5);
+      border-radius: 2px 8px 8px 2px;
+    }
+
+    /* Spine shadow left */
+    .book::before {
+      content:'';
+      position:absolute;
+      top:0; left:0; bottom:0;
+      width:18px;
+      background: linear-gradient(to right, rgba(0,0,0,0.25), transparent);
+      border-radius: 2px 0 0 2px;
+      z-index:2;
+      pointer-events:none;
+    }
+
+    /* Page curl bottom right */
+    .book::after {
+      content:'';
+      position:absolute;
+      bottom:0; right:0;
+      width:36px; height:36px;
+      background: linear-gradient(225deg, #d4c4a0 45%, var(--paper) 45%);
+      box-shadow: -3px -3px 6px rgba(0,0,0,0.15);
+      pointer-events:none;
+    }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      padding: 48px 40px 40px;
+      text-align: center;
+      border-bottom: 2px solid var(--gold);
+      position: relative;
+      background: linear-gradient(160deg, var(--paper) 70%, var(--parch));
+    }
+
+    .cover-top-ornament {
+      font-size: 0.6rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      font-family: 'Special Elite', cursive;
+    }
+
+    /* Photo frame */
+    .photo-frame {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 24px;
+      position: relative;
+    }
+    .photo-frame-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--parch);
+      border: 4px solid var(--gold);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 0 0 2px var(--rust), 0 6px 20px var(--shadow);
+    }
+    .photo-frame-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .photo-placeholder {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: var(--gold);
+      opacity: 0.4;
+      user-select: none;
+    }
+    /* corner stars */
+    .photo-frame::before,
+    .photo-frame::after {
+      content:'✦';
+      position:absolute;
+      color:var(--gold);
+      font-size:0.8rem;
+      opacity:0.6;
+    }
+    .photo-frame::before { top:-6px; left:50%; transform:translateX(-50%); }
+    .photo-frame::after  { bottom:-8px; left:50%; transform:translateX(-50%); }
+
+    .cover-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-bottom: 6px;
+      animation: fadeIn 1s ease both;
+    }
+    .cover-name span {
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    .cover-tagline {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .cover-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      margin: 0 auto;
+      opacity: 0.6;
+    }
+    .cover-divider::before,
+    .cover-divider::after {
+      content:'';
+      flex:1;
+      height:1px;
+      max-width:80px;
+      background: var(--gold);
+    }
+    .cover-divider span { color:var(--gold); font-size:0.9rem; }
+
+    /* ── SECTIONS INSIDE BOOK ── */
+    .section {
+      padding: 32px 40px;
+      border-bottom: 1px dashed rgba(201,151,58,0.35);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .section.visible { opacity:1; transform:translateY(0); }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .section-icon {
+      width: 30px;
+      height: 30px;
+      background: var(--rust);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px var(--shadow);
+    }
+    .section-title {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+    .section-rule {
+      flex:1;
+      height:1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      opacity:0.4;
+    }
+
+    /* ── BIODATA GRID ── */
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .bio-item {
+      background: var(--parch);
+      padding: 14px 16px;
+      border-left: 3px solid var(--gold);
+      position: relative;
+    }
+    .bio-item.full { grid-column: 1 / -1; }
+    .bio-label {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .bio-value {
+      font-family: 'Lora', serif;
+      font-size: 0.92rem;
+      color: var(--ink);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    /* ── HOBI CHIPS ── */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--parch);
+      border: 1.5px solid var(--gold);
+      padding: 8px 16px;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.78rem;
+      color: var(--brown);
+      letter-spacing: 0.05em;
+      transition: all 0.25s;
+    }
+    .chip:hover {
+      background: var(--rust);
+      color: var(--paper);
+      border-color: var(--rust);
+      transform: translateY(-2px);
+    }
+    .chip-icon { font-size: 1rem; }
+
+    /* ── KEAHLIAN BARS ── */
+    .skill-list { display: flex; flex-direction: column; gap: 14px; }
+    .skill-row {}
+    .skill-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .skill-name {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.78rem;
+      color: var(--brown);
+      letter-spacing: 0.05em;
+    }
+    .skill-pct {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.68rem;
+      color: var(--gold);
+    }
+    .skill-track {
+      height: 6px;
+      background: var(--parch);
+      border-radius: 0;
+      overflow: hidden;
+      border: 1px solid rgba(201,151,58,0.2);
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--rust), var(--gold));
+      width: 0;
+      transition: width 1.4s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── PENGALAMAN ── */
+    .exp-card {
+      background: var(--parch);
+      padding: 20px 22px;
+      border-top: 3px solid var(--rust);
+      position: relative;
+    }
+    .exp-badge {
+      display: inline-block;
+      background: var(--rust);
+      color: var(--paper);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      padding: 3px 10px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .exp-place {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .exp-place em { font-style:italic; color:var(--rust); }
+    .exp-detail {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .exp-duration {
+      margin-top: 10px;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+    }
+
+    /* ── FOTO GALERI ── */
+    .gallery-note {
+      font-family:'Special Elite',cursive;
+      font-size:0.7rem;
+      color:var(--muted);
+      letter-spacing:0.1em;
+      margin-bottom:14px;
+      font-style:italic;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      background: var(--parch);
+      border: 2px solid rgba(201,151,58,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .gallery-item:hover {
+      border-color: var(--rust);
+      transform: scale(1.02);
+    }
+    .gallery-item img {
+      width:100%; height:100%;
+      object-fit:cover;
+    }
+    .gallery-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.35;
+    }
+    .gallery-placeholder span {
+      font-size: 1.6rem;
+    }
+    .gallery-placeholder p {
+      font-family:'Special Elite',cursive;
+      font-size:0.58rem;
+      letter-spacing:0.15em;
+      color:var(--brown);
+      text-align:center;
+    }
+    .gallery-item.wide { grid-column: 1 / -1; aspect-ratio: 2/1; }
+
+    /* ── PESAN ── */
+    .message-section {
+      padding: 36px 40px 40px;
+      text-align: center;
+      background: linear-gradient(160deg, var(--parch), var(--paper));
+      position: relative;
+    }
+    .message-ornament {
+      font-size: 2.8rem;
+      color: var(--gold);
+      opacity: 0.2;
+      line-height: 1;
+      position: absolute;
+      top: 20px; left: 30px;
+      font-family: 'Playfair Display', serif;
+    }
+    .message-ornament.right {
+      left: auto; right: 30px;
+      top: auto; bottom: 50px;
+    }
+    .message-label {
+      font-family:'Special Elite',cursive;
+      font-size:0.6rem;
+      letter-spacing:0.4em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:14px;
+    }
+    .message-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--ink);
+      line-height: 1.8;
+      max-width: 360px;
+      margin: 0 auto 20px;
+    }
+    .message-sig {
+      font-family:'Special Elite',cursive;
+      font-size:0.78rem;
+      color:var(--rust);
+      letter-spacing:0.15em;
+    }
+
+    /* ── FOOTER ── */
+    .book-footer {
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(201,151,58,0.25);
+    }
+    .book-footer-text {
+      font-family:'Special Elite',cursive;
+      font-size:0.6rem;
+      letter-spacing:0.2em;
+      color:var(--muted);
+      text-transform:uppercase;
+    }
+    .book-page-num {
+      font-family:'Playfair Display',serif;
+      font-size:0.75rem;
+      color:var(--gold);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(16px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .cover-name   { animation: fadeIn 0.8s 0.1s ease both; }
+    .cover-tagline{ animation: fadeIn 0.8s 0.25s ease both; }
+    .cover-divider{ animation: fadeIn 0.8s 0.4s ease both; }
+    .photo-frame  { animation: fadeIn 0.9s 0.0s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 440px) {
+      .section { padding: 28px 22px; }
+      .cover   { padding: 36px 22px 32px; }
+      .message-section { padding: 30px 22px 36px; }
+      .book-footer { padding: 16px 22px; }
+      .cover-name { font-size: 1.5rem; }
+      .bio-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="book">
+
+  <!-- ══ COVER ══ -->
+  <div class="cover">
+    <p class="cover-top-ornament">✦ Biodata Diri ✦</p>
+
+    <div class="photo-frame">
+      <div class="photo-frame-inner">
+        <!-- Ganti src dengan link foto kamu -->
+        <!-- <img src="foto-kamu.jpg" alt="Foto Fahrian"> -->
+        <span class="photo-placeholder">F</span>
+      </div>
+    </div>
+
+    <h1 class="cover-name">Muhammad<br/><span>Fahrian Noor</span></h1>
+    <p class="cover-tagline">Remaja Banjarmasin · Angkatan 2009</p>
+    <div class="cover-divider"><span>❧</span></div>
+  </div>
+
+  <!-- ══ DATA DIRI ══ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">📋</div>
+      <p class="section-title">Data Diri</p>
+      <div class="section-rule"></div>
+    </div>
+    <div class="bio-grid">
+      <div class="bio-item">
+        <p class="bio-label">Nama Lengkap</p>
+        <p class="bio-value">Muhammad Fahrian Noor</p>
+      </div>
+      <div class="bio-item">
+        <p class="bio-label">Usia</p>
+        <p class="bio-value">17 Tahun</p>
+      </div>
+      <div class="bio-item">
+        <p class="bio-label">Tempat Lahir</p>
+        <p class="bio-value">Banjarmasin</p>
+      </div>
+      <div class="bio-item">
+        <p class="bio-label">Tanggal Lahir</p>
+        <p class="bio-value">8 Februari 2009</p>
+      </div>
+      <div class="bio-item full">
+        <p class="bio-label">Zodiak & Shio</p>
+        <p class="bio-value">♒ Aquarius · Shio Kerbau</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HOBI ══ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">⚡</div>
+      <p class="section-title">Hobi</p>
+      <div class="section-rule"></div>
+    </div>
+    <div class="chips">
+      <div class="chip"><span class="chip-icon">🏊</span> Berenang</div>
+      <div class="chip"><span class="chip-icon">🏐</span> Voli</div>
+      <div class="chip"><span class="chip-icon">🏀</span> Basket</div>
+    </div>
+  </div>
+
+  <!-- ══ KEAHLIAN ══ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">⚙️</div>
+      <p class="section-title">Keahlian</p>
+      <div class="section-rule"></div>
+    </div>
+    <div class="skill-list">
+      <div class="skill-row">
+        <div class="skill-top">
+          <span class="skill-name">💼 Microsoft Office</span>
+          <span class="skill-pct">85%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" data-w="85"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-top">
+          <span class="skill-name">🎨 Canva</span>
+          <span class="skill-pct">80%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" data-w="80"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-top">
+          <span class="skill-name">🎬 Editing CapCut</span>
+          <span class="skill-pct">75%</span>
+        </div>
+        <div class="skill-track"><div class="skill-fill" data-w="75"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PENGALAMAN ══ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">🏢</div>
+      <p class="section-title">Pengalaman</p>
+      <div class="section-rule"></div>
+    </div>
+    <div class="exp-card">
+      <span class="exp-badge">PKL · Praktek Kerja Lapangan</span>
+      <p class="exp-place">Kantor Pelayanan<br/><em>Perbendaharaan Buntok</em></p>
+      <p class="exp-detail">Menjalani praktik kerja lapangan di instansi pemerintah, belajar langsung tentang pelayanan administrasi dan perbendaharaan negara.</p>
+      <p class="exp-duration">⏱ Durasi : 3 Bulan</p>
+    </div>
+  </div>
+
+  <!-- ══ GALERI FOTO ══ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">📷</div>
+      <p class="section-title">Galeri Foto</p>
+      <div class="section-rule"></div>
+    </div>
+    <p class="gallery-note">* Ganti src="..." dengan link foto kamu</p>
+    <div class="gallery">
+      <!-- Foto 1 - Lebar penuh -->
+      <div class="gallery-item wide">
+        <!-- <img src="foto1.jpg" alt="Foto 1"> -->
+        <div class="gallery-placeholder">
+          <span>🖼️</span>
+          <p>Foto Utama</p>
+        </div>
+      </div>
+      <!-- Foto 2 -->
+      <div class="gallery-item">
+        <!-- <img src="foto2.jpg" alt="Foto 2"> -->
+        <div class="gallery-placeholder">
+          <span>📸</span>
+          <p>Foto 2</p>
+        </div>
+      </div>
+      <!-- Foto 3 -->
+      <div class="gallery-item">
+        <!-- <img src="foto3.jpg" alt="Foto 3"> -->
+        <div class="gallery-placeholder">
+          <span>📸</span>
+          <p>Foto 3</p>
+        </div>
+      </div>
+      <!-- Foto 4 -->
+      <div class="gallery-item">
+        <!-- <img src="foto4.jpg" alt="Foto 4"> -->
+        <div class="gallery-placeholder">
+          <span>📸</span>
+          <p>Foto 4</p>
+        </div>
+      </div>
+      <!-- Foto 5 -->
+      <div class="gallery-item">
+        <!-- <img src="foto5.jpg" alt="Foto 5"> -->
+        <div class="gallery-placeholder">
+          <span>📸</span>
+          <p>Foto 5</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PESAN ══ -->
+  <div class="message-section">
+    <div class="message-ornament">"</div>
+    <div class="message-ornament right">"</div>
+    <p class="message-label">✦ Pesan Dariku ✦</p>
+    <p class="message-text">
+      Terima kasih sudah mampir dan meluangkan waktu untuk mengenal aku lebih dekat. Semoga kita bisa saling kenal dan memberikan hal-hal baik satu sama lain. Salam hangat dari Banjarmasin! 🌟
+    </p>
+    <p class="message-sig">— Muhammad Fahrian Noor</p>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="book-footer">
+    <span class="book-footer-text">Banjarmasin · 2025</span>
+    <span class="book-page-num">✦</span>
+    <span class="book-footer-text">@fahriannoor</span>
+  </div>
+
+</div><!-- end .book -->
+
+<script>
+  // Scroll reveal
+  const sections = document.querySelectorAll('.section');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        // animate skill bars
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  sections.forEach(s => io.observe(s));
+
+  // Message section fade
+  const msg = document.querySelector('.message-section');
+  const msgObserver = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) {
+      msg.style.transition = 'opacity 1s ease';
+      msg.style.opacity = '1';
+    }
+  }, { threshold: 0.2 });
+  msg.style.opacity = '0';
+  msgObserver.observe(msg);
+</script>
+
+</body>
+  </html>
+  
