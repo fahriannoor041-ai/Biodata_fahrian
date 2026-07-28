@@ -6,239 +6,668 @@
   <title>Biodata — Muhammad Fahrian Noor</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet"/>
   <style>
+    /* ============================================================
+       1. VARIABEL WARNA
+       ============================================================ */
     :root {
-      --paper:  #f7f0e2;
-      --parch:  #ede0c4;
-      --brown:  #3b2310;
-      --rust:   #9c4221;
-      --gold:   #c9973a;
-      --ink:    #1e0f06;
-      --muted:  #7a5c45;
-      --shadow: rgba(30,15,6,0.18);
+      --paper: #f7f0e2;
+      --parch: #ede0c4;
+      --brown: #3b2310;
+      --rust: #9c4221;
+      --gold: #c9973a;
+      --ink: #1e0f06;
+      --muted: #7a5c45;
+      --shadow: rgba(30, 15, 6, 0.18);
     }
 
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
+    /* ============================================================
+       2. RESET & BASE
+       ============================================================ */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      background: #2a1a0d;
-      font-family: 'Lora', serif;
-      color: var(--brown);
-      min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: flex-start;
+      justify-content: center;
+      min-height: 100vh;
       padding: 32px 16px 60px;
+      background: #2a1a0d;
+      color: var(--brown);
+      font-family: 'Lora', serif;
     }
 
     body::before {
-      content:'';
-      position:fixed;
-      inset:0;
-      background-image: radial-gradient(circle, rgba(201,151,58,0.08) 1px, transparent 1px);
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(201, 151, 58, 0.08) 1px, transparent 1px);
       background-size: 28px 28px;
-      pointer-events:none;
+      pointer-events: none;
     }
 
-    /* ── BOOK ── */
+    /* ============================================================
+       3. BOOK (KONTAINER UTAMA)
+       ============================================================ */
     .book {
+      position: relative;
       width: 100%;
       max-width: 520px;
       background: var(--paper);
-      position: relative;
-      box-shadow: -6px 0 18px rgba(0,0,0,0.4), 6px 0 18px rgba(0,0,0,0.3), 0 8px 40px rgba(0,0,0,0.5);
       border-radius: 2px 8px 8px 2px;
-    }
-    .book::before {
-      content:'';
-      position:absolute;
-      top:0; left:0; bottom:0;
-      width:18px;
-      background: linear-gradient(to right, rgba(0,0,0,0.25), transparent);
-      border-radius: 2px 0 0 2px;
-      z-index:2;
-      pointer-events:none;
-    }
-    .book::after {
-      content:'';
-      position:absolute;
-      bottom:0; right:0;
-      width:36px; height:36px;
-      background: linear-gradient(225deg, #d4c4a0 45%, var(--paper) 45%);
-      box-shadow: -3px -3px 6px rgba(0,0,0,0.15);
-      pointer-events:none;
+      box-shadow:
+        -6px 0 18px rgba(0, 0, 0, 0.4),
+         6px 0 18px rgba(0, 0, 0, 0.3),
+         0 8px 40px rgba(0, 0, 0, 0.5);
+      /* Isolasi jadi satu compositing layer sendiri agar animasi
+         opacity/transform di dalamnya tidak memicu glitch/tearing
+         render saat scroll di GPU mobile. */
+      isolation: isolate;
+      transform: translateZ(0);
     }
 
-    /* ── COVER ── */
+    .book::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 18px;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.25), transparent);
+      border-radius: 2px 0 0 2px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .book::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(225deg, #d4c4a0 45%, var(--paper) 45%);
+      box-shadow: -3px -3px 6px rgba(0, 0, 0, 0.15);
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       4. COVER (HALAMAN DEPAN)
+       ============================================================ */
     .cover {
       padding: 48px 40px 40px;
       text-align: center;
-      border-bottom: 2px solid var(--gold);
       background: linear-gradient(160deg, var(--paper) 70%, var(--parch));
+      border-bottom: 2px solid var(--gold);
     }
+
     .cover-top-ornament {
+      margin-bottom: 20px;
+      color: var(--gold);
+      font-family: 'Special Elite', cursive;
       font-size: 0.6rem;
       letter-spacing: 0.5em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-      font-family: 'Special Elite', cursive;
     }
 
     .photo-frame {
-      width: 140px; height: 140px;
-      margin: 0 auto 24px;
       position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 24px;
     }
+
     .photo-frame-inner {
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      background: var(--parch);
-      border: 4px solid var(--gold);
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--parch);
+      border: 4px solid var(--gold);
+      border-radius: 50%;
       box-shadow: 0 0 0 2px var(--rust), 0 6px 20px var(--shadow);
     }
-    .photo-frame-inner img { width:100%; height:100%; object-fit:cover; }
-    .photo-placeholder { font-family:'Playfair Display',serif; font-size:3.5rem; color:var(--gold); opacity:0.4; }
-    .photo-frame::before, .photo-frame::after { content:'✦'; position:absolute; color:var(--gold); font-size:0.8rem; opacity:0.6; }
-    .photo-frame::before { top:-6px; left:50%; transform:translateX(-50%); }
-    .photo-frame::after  { bottom:-8px; left:50%; transform:translateX(-50%); }
+
+    .photo-frame-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      opacity: 0.4;
+    }
+
+    .photo-frame::before,
+    .photo-frame::after {
+      content: '✦';
+      position: absolute;
+      color: var(--gold);
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+
+    .photo-frame::before {
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .photo-frame::after {
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
     .cover-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.85rem; font-weight: 900;
-      color: var(--ink); line-height: 1.15;
       margin-bottom: 6px;
+      color: var(--ink);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      font-weight: 900;
+      line-height: 1.15;
       animation: fadeIn 1s ease both;
     }
-    .cover-name span { font-style:italic; color:var(--rust); }
+
+    .cover-name span {
+      color: var(--rust);
+      font-style: italic;
+    }
+
     .cover-tagline {
-      font-family: 'Special Elite', cursive;
-      font-size: 0.7rem; letter-spacing: 0.3em;
-      text-transform: uppercase; color: var(--muted);
       margin-bottom: 20px;
+      color: var(--muted);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
       animation: fadeIn 0.8s 0.25s ease both;
     }
+
     .cover-divider {
-      display: flex; align-items: center; gap: 10px;
-      justify-content: center; opacity: 0.6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0.6;
       animation: fadeIn 0.8s 0.4s ease both;
     }
-    .cover-divider::before, .cover-divider::after {
-      content:''; flex:1; height:1px; max-width:80px; background:var(--gold);
-    }
-    .cover-divider span { color:var(--gold); font-size:0.9rem; }
 
-    /* ── SECTION ── */
+    .cover-divider::before,
+    .cover-divider::after {
+      content: '';
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .cover-divider span {
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+
+    /* ============================================================
+       5. SECTION (BLOK KONTEN UMUM)
+       ============================================================ */
     .section {
       padding: 32px 40px;
-      border-bottom: 1px dashed rgba(201,151,58,0.35);
-      opacity: 0; transform: translateY(20px);
+      border-bottom: 1px dashed rgba(201, 151, 58, 0.35);
+      opacity: 0;
+      transform: translateY(20px);
       transition: opacity 0.7s ease, transform 0.7s ease;
+      will-change: opacity, transform;
     }
-    .section.visible { opacity:1; transform:translateY(0); }
 
-    .section-head { display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
     .section-icon {
-      width:30px; height:30px; background:var(--rust); border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      font-size:0.85rem; flex-shrink:0; box-shadow:0 2px 6px var(--shadow);
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: var(--rust);
+      border-radius: 50%;
+      box-shadow: 0 2px 6px var(--shadow);
+      font-size: 0.85rem;
     }
-    .section-title { font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--rust); }
-    .section-rule { flex:1; height:1px; background:linear-gradient(to right,var(--gold),transparent); opacity:0.4; }
 
-    /* ── BIO GRID ── */
-    .bio-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    .bio-item { background:var(--parch); padding:14px 16px; border-left:3px solid var(--gold); }
-    .bio-item.full { grid-column:1 / -1; }
-    .bio-label { font-family:'Special Elite',cursive; font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
-    .bio-value { font-family:'Lora',serif; font-size:0.92rem; color:var(--ink); font-weight:600; line-height:1.4; }
+    .section-title {
+      color: var(--rust);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+    }
 
-    /* ── CHIPS ── */
-    .chips { display:flex; flex-wrap:wrap; gap:10px; }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      opacity: 0.4;
+    }
+
+    /* ============================================================
+       6. DATA DIRI (BIO GRID)
+       ============================================================ */
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .bio-item {
+      padding: 14px 16px;
+      background: var(--parch);
+      border-left: 3px solid var(--gold);
+    }
+
+    .bio-item.full {
+      grid-column: 1 / -1;
+    }
+
+    .bio-label {
+      margin-bottom: 4px;
+      color: var(--gold);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .bio-value {
+      color: var(--ink);
+      font-family: 'Lora', serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       7. HOBI (CHIPS)
+       ============================================================ */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
     .chip {
-      display:flex; align-items:center; gap:7px;
-      background:var(--parch); border:1.5px solid var(--gold);
-      padding:8px 16px; font-family:'Special Elite',cursive;
-      font-size:0.78rem; color:var(--brown); letter-spacing:0.05em;
-      transition:all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      background: var(--parch);
+      border: 1.5px solid var(--gold);
+      color: var(--brown);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      transition: all 0.25s;
     }
-    .chip:hover { background:var(--rust); color:var(--paper); border-color:var(--rust); transform:translateY(-2px); }
-    .chip-icon { font-size:1rem; }
 
-    /* ── SKILL BARS ── */
-    .skill-list { display:flex; flex-direction:column; gap:14px; }
-    .skill-top { display:flex; justify-content:space-between; margin-bottom:5px; }
-    .skill-name { font-family:'Special Elite',cursive; font-size:0.78rem; color:var(--brown); letter-spacing:0.05em; }
-    .skill-pct  { font-family:'Special Elite',cursive; font-size:0.68rem; color:var(--gold); }
-    .skill-track { height:6px; background:var(--parch); border:1px solid rgba(201,151,58,0.2); overflow:hidden; }
-    .skill-fill  { height:100%; background:linear-gradient(to right,var(--rust),var(--gold)); width:0; transition:width 1.4s cubic-bezier(.4,0,.2,1); }
+    .chip:hover {
+      background: var(--rust);
+      border-color: var(--rust);
+      color: var(--paper);
+      transform: translateY(-2px);
+    }
 
-    /* ── PENGALAMAN ── */
-    .exp-card { background:var(--parch); padding:20px 22px; border-top:3px solid var(--rust); }
-    .exp-badge { display:inline-block; background:var(--rust); color:var(--paper); font-family:'Special Elite',cursive; font-size:0.58rem; letter-spacing:0.2em; padding:3px 10px; margin-bottom:10px; text-transform:uppercase; }
-    .exp-place { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:4px; }
-    .exp-place em { font-style:italic; color:var(--rust); }
-    .exp-detail { font-size:0.82rem; color:var(--muted); line-height:1.6; }
-    .exp-duration { margin-top:10px; font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); }
+    .chip-icon {
+      font-size: 1rem;
+    }
 
-    /* ── PRESTASI ── */
-    .prestasi-list { display:flex; flex-direction:column; gap:12px; }
+    /* ============================================================
+       8. KEAHLIAN (SKILL BARS)
+       ============================================================ */
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .skill-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .skill-name {
+      color: var(--brown);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    .skill-pct {
+      color: var(--gold);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.68rem;
+    }
+
+    .skill-track {
+      height: 6px;
+      overflow: hidden;
+      background: var(--parch);
+      border: 1px solid rgba(201, 151, 58, 0.2);
+    }
+
+    .skill-fill {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(to right, var(--rust), var(--gold));
+      transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ============================================================
+       9. PENGALAMAN
+       ============================================================ */
+    .exp-card {
+      padding: 20px 22px;
+      background: var(--parch);
+      border-top: 3px solid var(--rust);
+    }
+
+    .exp-badge {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 3px 10px;
+      background: var(--rust);
+      color: var(--paper);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .exp-place {
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .exp-place em {
+      color: var(--rust);
+      font-style: italic;
+    }
+
+    .exp-detail {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    .exp-duration {
+      margin-top: 10px;
+      color: var(--gold);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+    }
+
+    /* ============================================================
+       10. PRESTASI
+       ============================================================ */
+    .prestasi-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .prestasi-item {
-      display:flex; align-items:flex-start; gap:14px;
-      background:var(--parch); padding:14px 16px;
-      border-left:3px solid var(--gold);
-      transition:all 0.25s;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--parch);
+      border-left: 3px solid var(--gold);
+      transition: all 0.25s;
     }
-    .prestasi-item:hover { border-color:var(--rust); transform:translateX(4px); }
-    .prestasi-medal { font-size:1.5rem; flex-shrink:0; line-height:1.2; }
-    .prestasi-title { font-family:'Lora',serif; font-size:0.88rem; font-weight:600; color:var(--ink); line-height:1.4; margin-bottom:3px; }
-    .prestasi-meta  { font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.15em; color:var(--gold); text-transform:uppercase; }
 
-    /* ── GALERI ── */
-    .gallery-note { font-family:'Special Elite',cursive; font-size:0.7rem; color:var(--muted); letter-spacing:0.1em; margin-bottom:14px; font-style:italic; }
-    .gallery { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .prestasi-item:hover {
+      border-color: var(--rust);
+      transform: translateX(4px);
+    }
+
+    .prestasi-medal {
+      flex-shrink: 0;
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .prestasi-title {
+      margin-bottom: 3px;
+      color: var(--ink);
+      font-family: 'Lora', serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .prestasi-meta {
+      color: var(--gold);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       11. GALERI FOTO
+       ============================================================ */
+    .gallery-note {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      font-style: italic;
+      letter-spacing: 0.1em;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
     .gallery-item {
-      aspect-ratio:1; background:var(--parch); border:2px solid rgba(201,151,58,0.3);
-      display:flex; align-items:center; justify-content:center;
-      overflow:hidden; transition:all 0.3s; cursor:pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--parch);
+      border: 2px solid rgba(201, 151, 58, 0.3);
+      cursor: pointer;
+      transition: all 0.3s;
     }
-    .gallery-item:hover { border-color:var(--rust); transform:scale(1.02); }
-    .gallery-item img { width:100%; height:100%; object-fit:cover; }
-    .gallery-item.wide { grid-column:1 / -1; aspect-ratio:2/1; }
-    .gallery-placeholder { display:flex; flex-direction:column; align-items:center; gap:6px; opacity:0.35; }
-    .gallery-placeholder span { font-size:1.6rem; }
-    .gallery-placeholder p { font-family:'Special Elite',cursive; font-size:0.58rem; letter-spacing:0.15em; color:var(--brown); text-align:center; }
 
-    /* ── PESAN ── */
+    .gallery-item:hover {
+      border-color: var(--rust);
+      transform: scale(1.02);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-item.wide {
+      grid-column: 1 / -1;
+      aspect-ratio: 2 / 1;
+    }
+
+    .gallery-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.35;
+    }
+
+    .gallery-placeholder span {
+      font-size: 1.6rem;
+    }
+
+    .gallery-placeholder p {
+      color: var(--brown);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    /* ============================================================
+       12. PESAN PENUTUP
+       ============================================================ */
     .message-section {
-      padding: 36px 40px 40px; text-align:center;
-      background: linear-gradient(160deg,var(--parch),var(--paper));
-      position:relative; opacity:0; transition:opacity 1s ease;
+      position: relative;
+      padding: 36px 40px 40px;
+      background: linear-gradient(160deg, var(--parch), var(--paper));
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1s ease;
     }
-    .message-ornament { font-size:2.8rem; color:var(--gold); opacity:0.2; position:absolute; top:20px; left:30px; font-family:'Playfair Display',serif; line-height:1; }
-    .message-ornament.right { left:auto; right:30px; top:auto; bottom:50px; }
-    .message-label { font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
-    .message-text { font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; color:var(--ink); line-height:1.8; max-width:360px; margin:0 auto 20px; }
-    .message-sig { font-family:'Special Elite',cursive; font-size:0.78rem; color:var(--rust); letter-spacing:0.15em; }
 
-    /* ── FOOTER ── */
-    .book-footer { padding:18px 40px; display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(201,151,58,0.25); }
-    .book-footer-text { font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.2em; color:var(--muted); text-transform:uppercase; }
-    .book-page-num { font-family:'Playfair Display',serif; font-size:0.75rem; color:var(--gold); }
+    .message-ornament {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      line-height: 1;
+      opacity: 0.2;
+    }
 
-    @keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    .message-ornament.right {
+      top: auto;
+      left: auto;
+      right: 30px;
+      bottom: 50px;
+    }
 
+    .message-label {
+      margin-bottom: 14px;
+      color: var(--gold);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+
+    .message-text {
+      max-width: 360px;
+      margin: 0 auto 20px;
+      color: var(--ink);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    .message-sig {
+      color: var(--rust);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+    }
+
+    /* ============================================================
+       13. FOOTER
+       ============================================================ */
+    .book-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      border-top: 1px solid rgba(201, 151, 58, 0.25);
+    }
+
+    .book-footer-text {
+      color: var(--muted);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .book-page-num {
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+    }
+
+    /* ============================================================
+       14. ANIMASI
+       ============================================================ */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ============================================================
+       15. RESPONSIVE
+       ============================================================ */
     @media (max-width: 440px) {
-      .section { padding:28px 22px; }
-      .cover   { padding:36px 22px 32px; }
-      .message-section { padding:30px 22px 36px; }
-      .book-footer { padding:16px 22px; }
-      .cover-name { font-size:1.5rem; }
-      .bio-grid { grid-template-columns:1fr; }
+      .section {
+        padding: 28px 22px;
+      }
+
+      .cover {
+        padding: 36px 22px 32px;
+      }
+
+      .message-section {
+        padding: 30px 22px 36px;
+      }
+
+      .book-footer {
+        padding: 16px 22px;
+      }
+
+      .cover-name {
+        font-size: 1.5rem;
+      }
+
+      .bio-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -455,7 +884,7 @@
       <p class="section-title">Galeri Foto</p>
       <div class="section-rule"></div>
     </div>
-    <p class="gallery-note">* Hapus komentar di bawah & ganti src dengan link foto kamu</p>
+    <p class="gallery-note">* galeri singkat dari aku</p>
     <div class="gallery">
 
       <!-- Foto 1 (lebar penuh) — hapus tanda komentar lalu isi src -->
